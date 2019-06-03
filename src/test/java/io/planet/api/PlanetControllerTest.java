@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(PlanetController.class)
-public class PlanetControllerIntegrationTest {
+public class PlanetControllerTest {
 
 
     @Autowired

@@ -69,7 +69,6 @@ public class PlanetService {
 
     @Cacheable(value = "planet", unless = "#result == null")
     public Planet get(Long id)  throws ApiException{
-        LOGGER.info("vai buscar o planeta {} ",id);
         try{
             if(!repository.exists(id)) {
                 return null;
