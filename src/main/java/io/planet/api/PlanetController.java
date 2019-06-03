@@ -24,11 +24,11 @@ public class PlanetController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlanetController.class);
 
 
-    private final PlanetService apiService;
+    private final PlanetService planetService;
 
     @Autowired
-    public PlanetController(PlanetService apiService) {
-        this.apiService = apiService;
+    public PlanetController(PlanetService planetService) {
+        this.planetService = planetService;
     }
 
     @RequestMapping(value = "/planets", method = RequestMethod.POST,
@@ -40,7 +40,7 @@ public class PlanetController {
             @ApiResponse(code = 500, message = "Error") })
     public ResponseEntity createPlanet(@ApiParam(value = "PlanetResource object that needs to be added" ,required=true )  @Valid @RequestBody PlanetResource body) {
         try {
-            Planet planet = apiService.create(body);
+            Planet planet = planetService.create(body);
             return new ResponseEntity(new PlanetResource(planet),HttpStatus.CREATED);
         } catch (ApiException e) {
             LOGGER.error("error on create planet",e);
@@ -56,7 +56,7 @@ public class PlanetController {
     @RequestMapping(value = "/planets/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deletePlanet(@ApiParam(value = "PlanetResource id to delete",required=true) @PathVariable("id") Long id) {
          try {
-            apiService.delete(id);
+            planetService.delete(id);
             return new ResponseEntity<Void>(HttpStatus.OK);
         } catch (ApiException e) {
             LOGGER.error("error on delete planet",e);
@@ -72,7 +72,7 @@ public class PlanetController {
     @RequestMapping(value = "/planets/{id}", method = RequestMethod.GET,produces = { MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity getPlanet(@ApiParam(value = "Id of planet to return",required=true) @PathVariable("id") Long id) {
         try {
-            Planet planet = apiService.get(id);
+            Planet planet = planetService.get(id);
             if(planet != null){
                 return new ResponseEntity(new PlanetResource(planet),HttpStatus.OK);
             }
@@ -90,7 +90,7 @@ public class PlanetController {
     @RequestMapping(value = "/planets", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity listPlanets(@ApiParam(value = "Name that need to be considered for filter") @Valid @RequestParam(value = "name", required = false) String name) {
         try {
-            List<Planet> planets = apiService.getAll(name);
+            List<Planet> planets = planetService.getAll(name);
             List<PlanetResource> planetResourceList = planets.stream().map(planet -> new PlanetResource(planet)).collect(Collectors.toList());
             return new ResponseEntity(planetResourceList,HttpStatus.OK);
         } catch (ApiException e) {

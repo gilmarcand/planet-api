@@ -19,6 +19,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service component responsible for business logic.
+ * Use cache to improve performance
+ */
 @Service
 public class PlanetService {
 
@@ -95,11 +99,12 @@ public class PlanetService {
         try{
             PlanetSearch response = swapiClient.executeSearch(name);
             if(response != null && response.getCount() >= 1){
-               response.getResults().forEach(swPlanet -> {
-                   if(StringUtils.equalsIgnoreCase(swPlanet.getName(),name)){
-                       filmeAppearances[0] = new Long(swPlanet.getFilms().size());
-                   }
-               });
+                for (co.swapi.api.Planet swPlanet : response.getResults()) {
+                    if (StringUtils.equalsIgnoreCase(swPlanet.getName(), name)) {
+                        filmeAppearances[0] = new Long(swPlanet.getFilms().size());
+                        break;
+                    }
+                }
 
             }
         } catch (Exception e){

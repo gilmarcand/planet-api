@@ -6,7 +6,6 @@ public class MessageResource {
     public static final int WARNING = 2;
     public static final int INFO = 3;
     public static final int OK = 4;
-    public static final int TOO_BUSY = 5;
 
     int code;
     String type;
@@ -28,9 +27,6 @@ public class MessageResource {
                 break;
             case OK:
                 setType("ok");
-                break;
-            case TOO_BUSY:
-                setType("too busy");
                 break;
             default:
                 setType("unknown");

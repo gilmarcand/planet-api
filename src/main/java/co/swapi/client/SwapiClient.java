@@ -25,9 +25,10 @@ public class SwapiClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(SwapiClient.class);
 
     private static final String EXCEPTION_IN_SEARCH = "Exception on consult SWPAI to planet [{}] | error[{}]";
-    private static final String EXCEPTION_IN_HTTP_RESPONSE_CLOSE = "Erro ao fechar HTTP Response";
-    private static final String EXCEPTION_ENCODING_URL = "Erro ao realizar encoding da URI";
-    private static final String EXCEPTION_IN_PARSE_SEARCH_RESPONSE = "Erro ao realizar o parse de response";
+    private static final String EXCEPTION_IN_HTTP_RESPONSE_CLOSE = "Erro on close HTTP Response";
+    private static final String EXCEPTION_ENCODING_URL = "Erro on encoding URI";
+    private static final String EXCEPTION_IN_PARSE_SEARCH_RESPONSE = "Error on parse response";
+    public static final String SWAPI_SEARCH_URL = "https://swapi.co/api/planets/?search=";
 
     private final ObjectMapper mapper;
 
@@ -77,8 +78,7 @@ public class SwapiClient {
 
     private String formattedEncodedUrl(final String planetName) {
         try {
-            String urlFormatted = "https://swapi.co/api/planets/?search="+planetName;
-
+            String urlFormatted = SWAPI_SEARCH_URL +planetName;
             // So, only the query string will be encoded
             final URL url = new URL(urlFormatted);
             final URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
