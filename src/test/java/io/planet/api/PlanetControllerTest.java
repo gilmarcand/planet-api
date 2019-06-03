@@ -17,7 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Arrays;
 import java.util.List;
 
-import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -60,6 +59,40 @@ public class PlanetControllerIntegrationTest {
                 .andExpect(status().isInternalServerError());
     }
 
+    @Test
+    public void getPlanetTest() throws Exception {
+        mvc.perform(get("/planets/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", Matchers.is(1)))
+                .andExpect(jsonPath("$.name", Matchers.is("Terra")));
+        mvc.perform(get("/planets/3")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+        mvc.perform(get("/planets/4")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError());
+    }
+
+    @Test
+    public void listPlanetsTest() throws Exception {
+        mvc.perform(get("/planets?name=Terra")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id", Matchers.is(1)))
+                .andExpect(jsonPath("$[0].name", Matchers.is("Terra")));
+        mvc.perform(get("/planets?")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)));
+        mvc.perform(get("/planets?name=Saturno")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is5xxServerError());
+    }
+
+
+
     @Before
     public void setup() throws Exception {
         Planet planet1 = new Planet();
@@ -98,37 +131,5 @@ public class PlanetControllerIntegrationTest {
         given(planetService.delete(1L)).willReturn(true);
         given(planetService.delete(2L)).willThrow(new ApiException(HttpStatus.NOT_FOUND.value(),""));
         given(planetService.delete(3L)).willThrow(new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(),""));
-    }
-
-    @Test
-    public void getPlanetTest() throws Exception {
-        mvc.perform(get("/planets/1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", Matchers.is(1)))
-                .andExpect(jsonPath("$.name", Matchers.is("Terra")));
-        mvc.perform(get("/planets/3")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
-        mvc.perform(get("/planets/4")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isInternalServerError());
-    }
-
-    @Test
-    public void listPlanetsTest() throws Exception {
-        mvc.perform(get("/planets?name=Terra")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].id", Matchers.is(1)))
-                .andExpect(jsonPath("$[0].name", Matchers.is("Terra")));
-        mvc.perform(get("/planets?")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)));
-        mvc.perform(get("/planets?name=Saturno")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is5xxServerError());
     }
 }
