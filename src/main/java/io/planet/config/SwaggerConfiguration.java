@@ -1,5 +1,6 @@
 package io.planet.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
@@ -15,13 +16,16 @@ import springfox.documentation.spring.web.plugins.Docket;
 @Configuration
 public class SwaggerConfiguration {
 
-    ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-            .title("Star Wars Planets API")
-            .description("REST API to manage planets, extending from [Star Wars public API](https://swapi.co/)")
-            .contact(new Contact("Gilmar Candido","", "gilmarcand@gmail.com"))
-            .build();
-    }
+    @Value("${SwaggerConfiguration.title:}")
+    private String title;
+    @Value("${SwaggerConfiguration.description:}")
+    private String description;
+    @Value("${SwaggerConfiguration.name:}")
+    private String name;
+    @Value("${SwaggerConfiguration.url:}")
+    private String url;
+    @Value("${SwaggerConfiguration.email:}")
+    private String email;
 
     @Bean
     public Docket customImplementation(){
@@ -29,7 +33,11 @@ public class SwaggerConfiguration {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("io.planet.api"))
                 .build()
-                .apiInfo(apiInfo());
+                .apiInfo(new ApiInfoBuilder()
+                        .title(title)
+                        .description(description)
+                        .contact(new Contact(name,url, email))
+                        .build());
     }
 
     @RequestMapping(value = "/")

@@ -33,11 +33,17 @@ public class SwapiClient {
 
     private final CloseableHttpClient httpClient;
 
+    private String baseUrl;
+
     public SwapiClient(CloseableHttpClient httpClient, ObjectMapper mapper) {
-        this.httpClient = httpClient;
-        this.mapper = mapper;
+        this(httpClient,mapper,SWAPI_SEARCH_URL);
     }
 
+    public SwapiClient(CloseableHttpClient httpClient, ObjectMapper mapper, String baseUrl) {
+        this.httpClient = httpClient;
+        this.mapper = mapper;
+        this.baseUrl = baseUrl;
+    }
     public final PlanetSearch executeSearch(final String planetName) {
         CloseableHttpResponse httpResponse = null;
         try {
@@ -77,7 +83,7 @@ public class SwapiClient {
 
     private String formattedEncodedUrl(final String planetName) {
         try {
-            String urlFormatted = SWAPI_SEARCH_URL +planetName;
+            String urlFormatted = this.baseUrl +planetName;
             // So, only the query string will be encoded
             final URL url = new URL(urlFormatted);
             final URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());

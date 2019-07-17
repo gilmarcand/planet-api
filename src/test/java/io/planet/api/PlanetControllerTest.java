@@ -27,7 +27,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(PlanetController.class)
 public class PlanetControllerTest {
 
-
     @Autowired
     private MockMvc mvc;
 
