@@ -1,6 +1,6 @@
 package io.planet.service;
 
-import co.swapi.api.PlanetSearch;
+import co.swapi.model.PlanetSearch;
 import co.swapi.client.SwapiClient;
 import io.planet.exception.ApiException;
 import io.planet.resource.PlanetResource;
@@ -97,7 +97,7 @@ public class PlanetService {
         try{
             PlanetSearch response = swapiClient.executeSearch(name);
             if(response != null && response.getCount() >= 1){
-                for (co.swapi.api.Planet swPlanet : response.getResults()) {
+                for (co.swapi.model.Planet swPlanet : response.getResults()) {
                     if (StringUtils.equalsIgnoreCase(swPlanet.getName(), name)) {
                         filmeAppearances[0] = new Long(swPlanet.getFilms().size());
                         break;
