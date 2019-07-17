@@ -1,7 +1,6 @@
 package io.planet.api;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class MessageResource {

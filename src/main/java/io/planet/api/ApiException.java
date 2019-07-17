@@ -1,7 +1,10 @@
 package io.planet.api;
 
+import lombok.Getter;
+
 public class ApiException extends Exception{
 
+    @Getter
     private int code;
 
     public ApiException (int code, String msg) {
@@ -9,11 +12,4 @@ public class ApiException extends Exception{
         this.code = code;
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public String getMessage() {
-        return super.getMessage();
-    }
 }
