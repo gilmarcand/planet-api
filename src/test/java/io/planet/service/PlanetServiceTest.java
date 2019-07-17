@@ -1,7 +1,7 @@
 package io.planet.service;
 
-import io.planet.api.ApiException;
-import io.planet.api.PlanetResource;
+import io.planet.exception.ApiException;
+import io.planet.resource.PlanetResource;
 import io.planet.model.Planet;
 import org.junit.Test;
 import org.junit.runner.RunWith;

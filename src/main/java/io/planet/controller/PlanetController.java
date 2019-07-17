@@ -1,9 +1,9 @@
 package io.planet.controller;
 
 
-import io.planet.api.ApiException;
-import io.planet.api.MessageResource;
-import io.planet.api.PlanetResource;
+import io.planet.exception.ApiException;
+import io.planet.resource.MessageResource;
+import io.planet.resource.PlanetResource;
 import io.planet.model.Planet;
 import io.planet.service.PlanetService;
 import io.swagger.annotations.*;
@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @Api(value = "planets")
 @Controller
@@ -41,7 +44,7 @@ public class PlanetController {
     public ResponseEntity createPlanet(@ApiParam(value = "PlanetResource object that needs to be added" ,required=true )  @Valid @RequestBody PlanetResource body) {
         try {
             Planet planet = planetService.create(body);
-            return new ResponseEntity(new PlanetResource(planet),HttpStatus.CREATED);
+            return new ResponseEntity(createPlanetResource(planet),HttpStatus.CREATED);
         } catch (ApiException e) {
             log.error("error on create planet",e);
             return new ResponseEntity(e.getMessage(),HttpStatus.valueOf(e.getCode()));
@@ -74,7 +77,7 @@ public class PlanetController {
         try {
             Planet planet = planetService.get(id);
             if(planet != null){
-                return new ResponseEntity(new PlanetResource(planet),HttpStatus.OK);
+                return new ResponseEntity(createPlanetResource(planet),HttpStatus.OK);
             }
             return new ResponseEntity(new MessageResource(MessageResource.INFO,"Planet not found"),HttpStatus.NOT_FOUND);
         } catch (ApiException e) {
@@ -91,12 +94,23 @@ public class PlanetController {
     public ResponseEntity listPlanets(@ApiParam(value = "Name that need to be considered for filter") @Valid @RequestParam(value = "name", required = false) String name) {
         try {
             List<Planet> planets = planetService.getAll(name);
-            List<PlanetResource> planetResourceList = planets.stream().map(planet -> new PlanetResource(planet)).collect(Collectors.toList());
+            List<PlanetResource> planetResourceList = planets.stream().map(planet -> createPlanetResource(planet)).collect(Collectors.toList());
             return new ResponseEntity(planetResourceList,HttpStatus.OK);
         } catch (ApiException e) {
             log.error("error on get all planet",e);
             return new ResponseEntity(e.getMessage(),HttpStatus.valueOf(e.getCode()));
         }
+    }
+
+    private PlanetResource createPlanetResource(Planet planet) {
+        PlanetResource planetResource = new PlanetResource();
+        planetResource.setPlanetId(planet.getId());
+        planetResource.setName(planet.getName());
+        planetResource.setClimate(planet.getClimate());
+        planetResource.setTerrain(planet.getTerrain());
+        planetResource.setFilms(planet.getFilms());
+        planetResource.add(linkTo(methodOn(PlanetController.class).getPlanet(planet.getId())).withSelfRel());
+        return planetResource;
     }
 
 }

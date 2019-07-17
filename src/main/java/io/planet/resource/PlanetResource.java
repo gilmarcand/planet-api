@@ -1,8 +1,6 @@
-package io.planet.api;
+package io.planet.resource;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.planet.controller.PlanetController;
-import io.planet.model.Planet;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,9 +9,6 @@ import org.springframework.hateoas.ResourceSupport;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
-
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  *
@@ -45,15 +40,5 @@ public class PlanetResource extends ResourceSupport {
   @JsonProperty("films")
   @ApiModelProperty(readOnly = true, value = "Number of appearances in films")
   private Long films;
-
-  public PlanetResource(Planet planet) {
-    super();
-    this.planetId = planet.getId();
-    this.name= planet.getName();
-    this.climate = planet.getClimate();
-    this.terrain = planet.getTerrain();
-    this.films = planet.getFilms();
-    this.add(linkTo(methodOn(PlanetController.class).getPlanet(planet.getId())).withSelfRel());
-  }
 
 }

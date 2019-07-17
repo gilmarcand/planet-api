@@ -2,11 +2,6 @@ package io.planet.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.Entity;
@@ -23,7 +18,7 @@ import java.io.Serializable;
 @Validated
 @Data
 @EqualsAndHashCode(exclude = {"name","climate","terrain","films"})
-public class Planet implements Serializable {
+public class Planet implements Serializable{
 
   @Id
   @GeneratedValue(strategy= GenerationType.AUTO)

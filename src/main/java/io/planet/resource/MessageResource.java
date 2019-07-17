@@ -1,4 +1,4 @@
-package io.planet.api;
+package io.planet.resource;
 
 import lombok.Getter;
 

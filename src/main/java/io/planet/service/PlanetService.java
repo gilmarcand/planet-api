@@ -2,8 +2,8 @@ package io.planet.service;
 
 import co.swapi.api.PlanetSearch;
 import co.swapi.client.SwapiClient;
-import io.planet.api.ApiException;
-import io.planet.api.PlanetResource;
+import io.planet.exception.ApiException;
+import io.planet.resource.PlanetResource;
 import io.planet.model.Planet;
 import io.planet.repository.PlanetRepository;
 import lombok.extern.slf4j.Slf4j;

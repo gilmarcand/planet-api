@@ -27,7 +27,7 @@ public class SwaggerConfiguration {
     public Docket customImplementation(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("io.planet.api"))
+                .apis(RequestHandlerSelectors.basePackage("io.planet.resource"))
                 .build()
                 .apiInfo(new ApiInfoBuilder()
                         .title(title)
