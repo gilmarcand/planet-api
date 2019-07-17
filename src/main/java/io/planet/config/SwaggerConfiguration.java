@@ -1,5 +1,6 @@
 package io.planet.config;
 
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +28,7 @@ public class SwaggerConfiguration {
     public Docket customImplementation(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("io.planet.resource"))
+                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
                 .build()
                 .apiInfo(new ApiInfoBuilder()
                         .title(title)
