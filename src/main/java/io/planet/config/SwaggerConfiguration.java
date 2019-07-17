@@ -35,7 +35,7 @@ public class SwaggerConfiguration {
 
     @RequestMapping(value = "/")
     public String index() {
-        return "redirect:config-ui.html";
+        return "redirect:swagger-ui.html";
     }
 
 }

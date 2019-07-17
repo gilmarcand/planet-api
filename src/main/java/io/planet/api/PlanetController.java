@@ -48,7 +48,7 @@ public class PlanetController {
         }
     }
 
-    @ApiOperation(value = "Deletes a planet ", nickname = "deletePlanet", notes = "", tags={ "planet", })
+    @ApiOperation(value = "Deletes a planet ", nickname = "deletePlanet", notes = "", tags={ "planet"})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "successful operation"),
             @ApiResponse(code = 404, message = "Planet not found"),
@@ -64,7 +64,7 @@ public class PlanetController {
         }
     }
 
-    @ApiOperation(value = "Get planet by id", nickname = "getPlanet", notes = "Returns a single planet by id", response = Planet.class, tags={ "planet", })
+    @ApiOperation(value = "Get planet by id", nickname = "getPlanet", notes = "Returns a single planet by id", response = Planet.class, tags={ "planet"})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "successful operation", response = PlanetResource.class),
             @ApiResponse(code = 404, message = "Planet not found", response = MessageResource.class),
@@ -83,7 +83,7 @@ public class PlanetController {
         }
     }
 
-    @ApiOperation(value = "List all planets", nickname = "listPlanets", notes = "", response = Planet.class, responseContainer = "List", tags={ "planet", })
+    @ApiOperation(value = "List all planets", nickname = "listPlanets", notes = "", response = Planet.class, responseContainer = "List", tags={ "planet"})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "successful operation", response = PlanetResource.class, responseContainer = "List"),
             @ApiResponse(code = 500, message = "Internal Error") })
