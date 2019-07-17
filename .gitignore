@@ -4,5 +4,6 @@
 .project
 .settings
 target
+logs
 pom.xml.releaseBackup
 release.properties

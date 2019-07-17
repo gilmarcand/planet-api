@@ -19,7 +19,6 @@ public class SwaggerConfiguration {
         return new ApiInfoBuilder()
             .title("Star Wars Planets API")
             .description("REST API to manage planets, extending from [Star Wars public API](https://swapi.co/)")
-            .version("1.0.0")
             .contact(new Contact("Gilmar Candido","", "gilmarcand@gmail.com"))
             .build();
     }

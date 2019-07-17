@@ -1,14 +1,13 @@
 package io.planet.service;
 
+import co.swapi.api.PlanetSearch;
+import co.swapi.client.SwapiClient;
 import io.planet.api.ApiException;
 import io.planet.api.PlanetResource;
 import io.planet.model.Planet;
 import io.planet.model.PlanetRepository;
-import co.swapi.client.SwapiClient;
-import co.swapi.api.PlanetSearch;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -24,9 +23,9 @@ import java.util.List;
  * Use cache to improve performance
  */
 @Service
+@Slf4j
 public class PlanetService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PlanetService.class);
 
     private final PlanetRepository repository;
 
@@ -104,10 +103,9 @@ public class PlanetService {
                         break;
                     }
                 }
-
             }
         } catch (Exception e){
-            LOGGER.error("Exception on consulting filme appearances ", e.getMessage());
+            log.error("Exception on consulting filme appearances ", e.getMessage());
         }
         return filmeAppearances[0];
     }

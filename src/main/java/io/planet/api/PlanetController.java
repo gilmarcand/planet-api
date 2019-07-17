@@ -1,11 +1,10 @@
 package io.planet.api;
 
 
+import io.planet.model.Planet;
 import io.planet.service.PlanetService;
 import io.swagger.annotations.*;
-import io.planet.model.Planet;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,10 +18,8 @@ import java.util.stream.Collectors;
 
 @Api(value = "planets")
 @Controller
+@Slf4j
 public class PlanetController {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PlanetController.class);
-
 
     private final PlanetService planetService;
 
@@ -43,7 +40,7 @@ public class PlanetController {
             Planet planet = planetService.create(body);
             return new ResponseEntity(new PlanetResource(planet),HttpStatus.CREATED);
         } catch (ApiException e) {
-            LOGGER.error("error on create planet",e);
+            log.error("error on create planet",e);
             return new ResponseEntity(e.getMessage(),HttpStatus.valueOf(e.getCode()));
         }
     }
@@ -59,7 +56,7 @@ public class PlanetController {
             planetService.delete(id);
             return new ResponseEntity<Void>(HttpStatus.OK);
         } catch (ApiException e) {
-            LOGGER.error("error on delete planet",e);
+             log.error("error on delete planet",e);
             return new ResponseEntity(e.getMessage(),HttpStatus.valueOf(e.getCode()));
         }
     }
@@ -78,7 +75,7 @@ public class PlanetController {
             }
             return new ResponseEntity(new MessageResource(MessageResource.INFO,"Planet not found"),HttpStatus.NOT_FOUND);
         } catch (ApiException e) {
-            LOGGER.error("error on get planet",e);
+            log.error("error on get planet",e);
             return new ResponseEntity(new MessageResource(MessageResource.ERROR,e.getMessage()),HttpStatus.valueOf(e.getCode()));
         }
     }
@@ -94,7 +91,7 @@ public class PlanetController {
             List<PlanetResource> planetResourceList = planets.stream().map(planet -> new PlanetResource(planet)).collect(Collectors.toList());
             return new ResponseEntity(planetResourceList,HttpStatus.OK);
         } catch (ApiException e) {
-            LOGGER.error("error on get all planet",e);
+            log.error("error on get all planet",e);
             return new ResponseEntity(e.getMessage(),HttpStatus.valueOf(e.getCode()));
         }
     }
