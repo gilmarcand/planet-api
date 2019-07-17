@@ -1,6 +1,9 @@
-package io.planet.api;
+package io.planet.controller;
 
 
+import io.planet.api.ApiException;
+import io.planet.api.MessageResource;
+import io.planet.api.PlanetResource;
 import io.planet.model.Planet;
 import io.planet.service.PlanetService;
 import io.swagger.annotations.*;

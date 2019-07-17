@@ -5,7 +5,7 @@ import co.swapi.client.SwapiClient;
 import io.planet.api.ApiException;
 import io.planet.api.PlanetResource;
 import io.planet.model.Planet;
-import io.planet.model.PlanetRepository;
+import io.planet.repository.PlanetRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

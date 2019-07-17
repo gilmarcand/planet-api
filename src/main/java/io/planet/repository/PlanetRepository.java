@@ -1,5 +1,6 @@
-package io.planet.model;
+package io.planet.repository;
 
+import io.planet.model.Planet;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

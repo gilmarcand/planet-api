@@ -1,6 +1,7 @@
 package io.planet.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.planet.controller.PlanetController;
 import io.planet.model.Planet;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
