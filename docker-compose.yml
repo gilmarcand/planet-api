@@ -1,0 +1,35 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=api_user
+      - POSTGRES_PASSWORD=x83tnKDnW2aYKpWE
+    ports:
+      - 5432:5432
+    networks:
+      - app-bridge
+    volumes:
+      - ./db.sql:/docker-entrypoint-initdb.d/db.sql
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - 6379:6379
+    networks:
+      - app-bridge
+  planet-api:
+    image: gilmarcand/planet-api
+    ports:
+      - 8080:8080
+      - 8081:8081
+    networks:
+      - app-bridge
+    depends_on:
+      - postgres
+      - redis
+networks:
+  app-bridge:
+    driver: bridge
