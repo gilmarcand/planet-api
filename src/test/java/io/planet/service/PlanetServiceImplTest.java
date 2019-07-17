@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @Sql(value = "planets.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-public class PlanetServiceTest {
+public class PlanetServiceImplTest {
 
     @Autowired
     private PlanetService planetService;
@@ -30,8 +30,8 @@ public class PlanetServiceTest {
 
     @Test()
     public void getAllTest() throws Exception{
-        assertEquals(1,planetService.getAll("Terra").size());
-        assertEquals(3,planetService.getAll(null).size());
+        assertEquals(1, planetService.getAll("Terra").size());
+        assertEquals(3, planetService.getAll(null).size());
     }
 
     @Test(expected = ApiException.class)
