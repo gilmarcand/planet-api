@@ -6,30 +6,30 @@ Rest API for managing planets. Technical Challenge - Dev. Back-End
 
 * [Spring Boot](https://spring.io/projects/spring-boot) - The framework used
 * [Maven](https://maven.apache.org/) - Dependency Management
-* [Amazon Relational Database Service (RDS)](https://aws.amazon.com/rds/) - Database
+* [PostgreSQL](https://www.postgresql.org/) - Production Database
+* [H2](https://www.h2database.com) - Development and test Database
 * [Apache HttpComponents](https://hc.apache.org/) - Http Client
 * [SpringFox](https://springfox.github.io/springfox/) - Automated JSON API documentation for API's built with Spring
 
 
 
-## Runing tests
+## Runing in development
 
-Type command
+You can open and start this Maven project in you preffered Java IDE or just execute command:
 
 ```
-mvn clean test
+mvn spring-boot:run
 ```
 
-## Packaging jar
+## Packaging
 
-Run package step:
+First you need to create docker image executing:
 
 ```
 mvn clean package
 ```
-
-Run excutable jar
+After create docker image:
 
 ```
-./planet-api.jar
+docker-compose up -d
 ```
